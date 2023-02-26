@@ -1,0 +1,24 @@
+<div class="card mb-3 p-2" style="max-width: 1000px;">
+    <div class="row g-0">
+        <div class="col-md-4 d-grid align-items-center justify-content-center">
+            <img src="{{this.image}}" class="card-img-top" style="max-width: 200px;" alt="...">
+        </div>
+        <div class="col-md-5 d-flex flex-row">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p class="card-text">{{this.description}}</p>
+                <p class="card-text fw-semibold"><small class="text-muted">Precio: {{this.price}}$</small></p>
+                <p class="fw-bold">Cantidad: <span>1</span></p>
+            </div>
+        </div>
+        <div class="col-md-3 d-grid align-items-center justify-content-center">
+            <form method="POST" action="/api/carrito/{{this._id}}?_method=DELETE">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+            <div class="d-flex gap-1">
+                <input class="btn btn-primary p-2" type="button" value="➕">
+                <input class="btn btn-primary p-2" type="button" value="➖">
+            </div>
+        </div>
+    </div>
+</div>

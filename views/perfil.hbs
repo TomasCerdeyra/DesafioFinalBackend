@@ -1,0 +1,24 @@
+{{> NavBar}}
+<div class="container d-flex flex-column align-items-center gap-5 mt-4 p-4">
+    <div class="w-25">
+        <img src="/img/perfiles/carson-arias-7Z03R1wOdmI-unsplash.jpg" class="rounded-circle img-fluid img-thumbnail bg-warning-subtle"
+            alt="...">
+    </div>
+    <dir class="w-75">
+        <form action="/perifil" method="post" enctype="multipart/form-data">
+            <input class="form-control form-control-sm" id="formFileSm" type="file">
+
+            <button class="btn btn-dark my-3">Cambiar imagen de perfil</button>
+        </form>
+    </dir>
+    <div class="w-50">
+        <h3>Tu informacion:</h3>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Nombre: {{user.name}}</li>
+            <li class="list-group-item">Aprellido: cerdeyra</li>
+            <li class="list-group-item">MAIL: {{user.email}}/li>
+            <li class="list-group-item">Direccion: {{user.address}}</li>
+            <li class="list-group-item">Edad: {{user.age}}</li>
+        </ul>
+    </div>
+</div>

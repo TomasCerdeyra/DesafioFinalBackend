@@ -1,0 +1,16 @@
+{{> NavBar}}
+
+<div class=" vh-100 d-flex flex-column justify-content-center align-items-center">
+    <h1 class="display-1 mt-5">Bienvenido {{name}}</h1>
+    <p class="mt-5">⬇⬇Desliza para ver los productos ⬇⬇</p>
+</div>
+
+
+<h2 class="ps-5 w-100 display-6 mt-5">Nuestros Productos: </h2>
+{{!-- Para carito --}}
+
+<div class="row row-cols-1 row-cols-md-3 g-4 px-5 mt-3">
+    {{#each products}}
+    {{> CardProduct}}
+    {{/each}}
+</div>

@@ -1,0 +1,20 @@
+{{> NavBar}}
+
+<div class="p-5 d-flex row justify-content-center">
+    <h2 class="display-6 d-inline w-75">Tus Productos: </h2>
+    <div class="row row-cols-2 row-cols-md-1 justify-content-center g-4 gap-3">
+        {{#if prodsCart}}
+        {{#each prodsCart}}
+        {{> CardCart}}
+        {{/each}}
+        {{else}}
+        <h3 class="display-6 d-inline w-75">Ve a Inicio y agregue productos a tu carrito para visualizarlos aca</h3>
+        {{/if}}
+    </div>
+</div>
+
+{{#if prodsCart}}
+<div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-primary btn-lg w-25 ">Finalizar Compra</button>
+</div>
+{{/if}}
