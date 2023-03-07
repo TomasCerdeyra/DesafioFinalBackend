@@ -1,4 +1,5 @@
 import ModelUser from "../models/user.js"
+import { loggerLog } from "../utils/pino.js"
 
 
 const register = (req, res) => {
@@ -16,7 +17,7 @@ const registerUser = async (req, res) => {
         await ModelUser.create(newUser)
         res.redirect('/login')
     } catch (error) {
-        console.log({ msg: error.messge });
+        loggerLog.error({ msg: error.message });
         return res.redirect('/register')
     }
 }
@@ -44,14 +45,15 @@ const loginEnter = async (req, res) => {
             res.redirect('/')
         })
     } catch (error) {
-        req.flash("mensajes", [{msj: error.message}])
+        loggerLog.error({ msg: error.message } )
+        req.flash("mensajes", [{msg: error.message}])
         res.redirect('/login')
     }
 }
 
 const logoutSession = (req, res) => {
     req.logout((err)=>{
-        if(err) throw new Error('Error al eliminar la sesion')
+        if(err) loggerLog.error('Error al eliminar la sesion')
         res.redirect('/')
     })
 }

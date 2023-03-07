@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
+import { logger } from "../utils/pino.js";
 dotenv.config()
 
 const connectionMongo = ()=> {
@@ -9,7 +10,7 @@ const connectionMongo = ()=> {
         useUnifiedTopology: true
     })
     .then(()=>{
-        console.log('connect ok');
+        logger.info('connect BD ok')
     })
     .catch((err) => {
         console.log(err);

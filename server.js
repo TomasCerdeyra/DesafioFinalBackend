@@ -4,6 +4,7 @@ import connectionMongo from './src/config/MongoDB.js';
 import ModelUser from './src/models/user.js';
 import dotenv from 'dotenv'
 import methodOverride from 'method-override'
+import { logger } from './src/utils/pino.js';
 dotenv.config()
 //sessions
 import session from 'express-session';
@@ -87,12 +88,12 @@ app.use(methodOverride('_method'))
 
 app.use('/', routeLogin)
 app.use('/', routerHome)
-app.use('/', routeCart)
+app.use('/api', routeCart)
 app.use('/', routerProfile)
 
-const PORT = process.env.PORT || 8080
 
+const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
     //Este log cambiarlo despues por pino
-    console.log('Escuchando ' + PORT);
+    logger.info('Escuchando ' + PORT);
 })

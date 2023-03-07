@@ -1,12 +1,13 @@
 import ModelProduct from "../models/product.js";
 import ModelCart from "../models/cart.js";
+import { logger } from "../utils/pino.js";
 
 const home = async (req, res) => {
     try {
         const products = await ModelProduct.find().lean()
         res.render('home', { products: products, name: req.user.name })
     } catch (error) {
-        console.log('lo se encontraron productos en este momento');
+        logger.info('No se encontraron productos en este momento');
     }
 }
 
@@ -28,14 +29,17 @@ const addCart = async (req, res) => {
 
         cart = await ModelCart.findOneAndUpdate(
             { user: idUser },
-            { $push: { products: prod } },
+            {
+                $push: { products: prod },
+                $inc: { total: parseInt(prod.price) }
+            },
             { new: true }
         );
 
         res.redirect('/api/carrito')
 
     } catch (error) {
-        console.log({ msg: error.message });
+        logger.info({ msg: error.message });
         res.redirect('/')
     }
 }

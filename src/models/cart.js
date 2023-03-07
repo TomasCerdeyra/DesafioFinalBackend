@@ -37,6 +37,9 @@ const cartSchema = new mongoose.Schema(
                 }
             }
         ],
+        total: {
+            type: Number
+        },
         user: {
             //Con Schema.Types.ObjectId, puedo traer el Id referido ("User")
             type: mongoose.Schema.Types.ObjectId,

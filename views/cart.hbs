@@ -7,6 +7,7 @@
         {{#each prodsCart}}
         {{> CardCart}}
         {{/each}}
+        <p class="fs-3 text-end px-5">Total: {{total}}</p>
         {{else}}
         <h3 class="display-6 d-inline w-75">Ve a Inicio y agregue productos a tu carrito para visualizarlos aca</h3>
         {{/if}}
@@ -15,6 +16,6 @@
 
 {{#if prodsCart}}
 <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-primary btn-lg w-25 ">Finalizar Compra</button>
+    <a href="/compra-terminada" type="button" class="btn btn-primary btn-lg w-25 ">Finalizar Compra</a>
 </div>
 {{/if}}
