@@ -10,7 +10,6 @@ dotenv.config()
 import session from 'express-session';
 import passport from 'passport';
 import flash from 'connect-flash'
-import { Strategy as LocalStrategy } from 'passport-local';
 import MongoStore from 'connect-mongo';
 //config __dirname
 import { fileURLToPath } from 'url';
@@ -70,7 +69,6 @@ passport.deserializeUser(async (user, done) => {
 
 //------
 
-
 //config handlebasr
 const hbs = create({
     extname: ".hbs",
@@ -79,12 +77,11 @@ const hbs = create({
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 app.set("views", "./views");
+//
 
-//Middleware
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
 
 app.use('/', routeLogin)
 app.use('/', routerHome)

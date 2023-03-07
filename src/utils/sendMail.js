@@ -10,7 +10,7 @@ const sendMails = async (mail,name,prods) => {
             pass: process.env.MAIL_PASS
         }  
     })
- 
+    
     const emailContent = {
         from: 'Mi primer prueba de mail',
         to: mail,

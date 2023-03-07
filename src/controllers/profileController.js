@@ -1,5 +1,7 @@
 import formidable from "formidable"
+import ModelUser from "../models/user.js";
 import { logger } from "../utils/pino.js"
+import fs from 'fs'
 //config __dirname
 import path from "path";
 import { fileURLToPath } from 'url';
@@ -8,35 +10,49 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const profile = async (req, res) => {
-    res.render('perfil', { user: req.user })
+    try {
+        const user = await ModelUser.findById(req.user.id)
+        res.render('perfil', { user: req.user, image: user.image })
+    } catch (error) {
+        logger.info(error)
+    }
 }
 
 const addImage = async (req, res) => {
     const form = new formidable.IncomingForm()
     form.maxFilSize = 50 * 1024 * 1024
 
-    form.parse(req, async(err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
         try {
             if (err) throw new Error('falla en formidable')
 
             const file = files.myFile
 
-            if(file.originalFilename === '') throw new Error('agregue una imagen')
+            if (file.originalFilename === '') throw new Error('Agregue una imagen por favor')
 
-            if(!(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')){
-                throw new Error('agregue una imagen JPG o PNG')
+            const imageType = ['image/jpeg', 'image/png']
+            if (!(imageType.includes(file.mimetype))) {
+                throw new Error('Por favor ingrese un imagen .jpg o png')
             }
 
-            if(file.size > 50 * 1024 * 1024) throw new Error('Agregue una imagen de meno de 5MB')
-            
-            const extension = file.mimetype.split('/')[1]
-            const dirFile = path.join(__dirname, `../public/img/perfiles/${req.user.id}.${extension}`)
+            if (file.size > 50 * 1024 * 1024) throw new Error('Se puede insertar imagenes menores a 50MB')
 
-            console.log(dirFile);
+            const extension = file.mimetype.split("/")[1];
+            const dirFile = path.join(__dirname, `../../public/img/perfiles/${req.user.id}.${extension}`);
+
+            fs.renameSync(file.filepath, dirFile)
+
+            const user = await ModelUser.findById(req.user.id)
+
+            user.image = `${req.user.id}.${extension}`
+
+            await user.save()
+            
+            req.flash("mensajes", [{ msg: 'Se subio la imagen' }])
             res.redirect('/perfil')
         } catch (error) {
-           logger.info({msg: error.message})
-           res.redirect('/perfil')
+            logger.info({ msg: error.message })
+            res.redirect('/perfil')
         }
     })
 }
