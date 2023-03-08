@@ -11,7 +11,6 @@ const registerUser = async (req, res) => {
     console.log(newUser);
     try {
         const user = await ModelUser.findOne(newUser)
-        console.log(user);
         if (user) throw new Error('El usuario con ese mail ya existe')
 
         await ModelUser.create(newUser)

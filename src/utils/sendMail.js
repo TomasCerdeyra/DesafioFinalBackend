@@ -1,4 +1,5 @@
 import { createTransport } from 'nodemailer'
+import { logger } from './pino.js'
 
 const sendMails = async (mail,name,prods) => {
 
@@ -21,10 +22,9 @@ const sendMails = async (mail,name,prods) => {
 
     try {
         const info = await transporter.sendMail(emailContent)
-        console.log(info);
+        
     } catch (error) {
-        console.log('fallo el envio d correo');
-        console.log(error);
+        logger.info('Fallo el envio de mail')
     }
 }
 
