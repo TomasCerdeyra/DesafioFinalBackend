@@ -15,12 +15,10 @@ const addCart = async (req, res) => {
     const { id } = req.params
     const idUser = req.user.id
     try {
-        //Tomo el producto a agregar
         const prod = await ModelProduct.findOne({ _id: id });
+
         if (!prod) throw new Error('El producto no existe');
 
-        //Verifico si el Usuario tiene un carrtio creado
-        // Busca el carrito del usuario
         let cart = await ModelCart.findOne({ user: idUser });
         if (!cart) {
             // Si no existe, crea un nuevo carrito para el usuario
@@ -40,7 +38,7 @@ const addCart = async (req, res) => {
 
     } catch (error) {
         logger.info({ msg: error.message });
-        res.redirect('/')
+        res.redirect('/api/home')
     }
 }
 

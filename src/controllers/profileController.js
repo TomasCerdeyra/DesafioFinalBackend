@@ -3,11 +3,8 @@ import ModelUser from "../models/user.js";
 import { logger } from "../utils/pino.js"
 import fs from 'fs'
 //config __dirname
+import __dirname from "../../configDirname.js";
 import path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const profile = async (req, res) => {
     try {
@@ -38,7 +35,8 @@ const addImage = async (req, res) => {
             if (file.size > 50 * 1024 * 1024) throw new Error('Se puede insertar imagenes menores a 50MB')
 
             const extension = file.mimetype.split("/")[1];
-            const dirFile = path.join(__dirname, `../../public/img/perfiles/${req.user.id}.${extension}`);
+            console.log(__dirname);
+            const dirFile = path.join(__dirname, `/public/img/perfiles/${req.user.id}.${extension}`);
 
             fs.renameSync(file.filepath, dirFile)
 
@@ -49,10 +47,10 @@ const addImage = async (req, res) => {
             await user.save()
             
             req.flash("mensajes", [{ msg: 'Se subio la imagen' }])
-            res.redirect('/perfil')
+            res.redirect('/api/perfil')
         } catch (error) {
             logger.info({ msg: error.message })
-            res.redirect('/perfil')
+            res.redirect('/api/perfil')
         }
     })
 }

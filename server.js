@@ -1,21 +1,16 @@
 import express from 'express'
+import 'dotenv/config'
+import './src/config/MongoDB.js'
+import __dirname from './configDirname.js';
 import { create } from 'express-handlebars'
-import connectionMongo from './src/config/MongoDB.js';
-import ModelUser from './src/models/user.js';
-import dotenv from 'dotenv'
 import methodOverride from 'method-override'
 import { logger } from './src/utils/pino.js';
-dotenv.config()
 //sessions
+import ModelUser from './src/models/user.js';
 import session from 'express-session';
 import passport from 'passport';
 import flash from 'connect-flash'
 import MongoStore from 'connect-mongo';
-//config __dirname
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 //Routes
 import routeLogin from './src/routes/loginRoute.js';
 import routerHome from './src/routes/homeRoute.js';
@@ -23,10 +18,8 @@ import routeCart from './src/routes/cartRoute.js';
 import routerProfile from './src/routes/profileRoute.js';
 
 const app = express();
-connectionMongo()
 
 /*-----Config Session y pasport-----*/
-
 app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.URI
@@ -67,8 +60,6 @@ passport.deserializeUser(async (user, done) => {
     })
 })
 
-//------
-
 //config handlebasr
 const hbs = create({
     extname: ".hbs",
@@ -77,20 +68,21 @@ const hbs = create({
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 app.set("views", "./views");
-//
 
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-app.use('/', routeLogin)
+//Routes
+app.use('/api', routeLogin)
 app.use('/', routerHome)
-app.use('/api', routeCart)
-app.use('/', routerProfile)
+app.use('/api/carrito', routeCart)
+app.use('/api/perfil', routerProfile)
 
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
-    //Este log cambiarlo despues por pino
     logger.info('Escuchando ' + PORT);
 })
+
+//desde config

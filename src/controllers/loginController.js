@@ -8,16 +8,16 @@ const register = (req, res) => {
 
 const registerUser = async (req, res) => {
     const newUser = req.body
-    console.log(newUser);
+    
     try {
         const user = await ModelUser.findOne(newUser)
-        if (user) throw new Error('El usuario con ese mail ya existe')
+        if (user.email) throw new Error('El usuario con ese mail ya existe')
 
         await ModelUser.create(newUser)
-        res.redirect('/login')
+        res.redirect('/api/login')
     } catch (error) {
         loggerLog.error({ msg: error.message });
-        return res.redirect('/register')
+        return res.redirect('/api/register')
     }
 }
 
@@ -34,9 +34,6 @@ const loginEnter = async (req, res) => {
         
         if (!user) throw new Error('El usuario no existe')
 
-        //Despues hacer verificacion si tiene la cuenta confirmada
-
-        //
         if (!(await user.comparePassword(password))) throw new Error('Uno de los datos ingresados es incorrecto')
 
         req.login(user, err =>{
@@ -46,7 +43,7 @@ const loginEnter = async (req, res) => {
     } catch (error) {
         loggerLog.error({ msg: error.message } )
         req.flash("mensajes", [{msg: error.message}])
-        res.redirect('/login')
+        res.redirect('/api/login')
     }
 }
 

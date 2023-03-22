@@ -1,20 +1,13 @@
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
 import { logger } from "../utils/pino.js";
-dotenv.config()
 
-const connectionMongo = ()=> {
+try {
     const URL = process.env.URI
-    mongoose.connect(URL, {
+    await mongoose.connect(URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    .then(()=>{
-        logger.info('connect BD ok')
-    })
-    .catch((err) => {
-        console.log(err);
-    })
+    logger.info('connect BD ok')
+} catch (error) {
+    logger.info('Error de conexion DB');
 }
-
-export default connectionMongo
