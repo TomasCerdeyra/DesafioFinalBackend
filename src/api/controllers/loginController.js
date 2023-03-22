@@ -1,5 +1,5 @@
-import ModelUser from "../models/user.js"
-import { loggerLog } from "../utils/pino.js"
+import ModelUser from "../../components/models/user.js"
+import { loggerLog } from "../../utils/pino.js"
 
 
 const register = (req, res) => {

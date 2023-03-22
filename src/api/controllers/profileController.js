@@ -1,9 +1,9 @@
 import formidable from "formidable"
-import ModelUser from "../models/user.js";
-import { logger } from "../utils/pino.js"
+import ModelUser from "../../components/models/user.js";
+import { logger } from "../../utils/pino.js"
 import fs from 'fs'
 //config __dirname
-import __dirname from "../../configDirname.js";
+import __dirname from "../../../configDirname.js";
 import path from "path";
 
 const profile = async (req, res) => {

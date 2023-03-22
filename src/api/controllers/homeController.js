@@ -1,6 +1,6 @@
-import ModelProduct from "../models/product.js";
-import ModelCart from "../models/cart.js";
-import { logger } from "../utils/pino.js";
+import ModelProduct from "../../components/models/product.js";
+import ModelCart from "../../components/models/cart.js";
+import { logger } from "../../utils/pino.js";
 
 const home = async (req, res) => {
     try {

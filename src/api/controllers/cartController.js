@@ -1,7 +1,7 @@
-import ModelCart from "../models/cart.js";
-import ModelProduct from "../models/product.js";
-import { logger } from "../utils/pino.js";
-import sendMails from "../utils/sendMail.js";
+import ModelCart from "../../components/models/cart.js";
+import ModelProduct from "../../components/models/product.js";
+import { logger } from "../../utils/pino.js";
+import sendMails from "../../utils/sendMail.js";
 
 const productsCart = async (req, res) => {
     const user = req.user.id

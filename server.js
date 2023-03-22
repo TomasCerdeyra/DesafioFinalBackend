@@ -6,16 +6,16 @@ import { create } from 'express-handlebars'
 import methodOverride from 'method-override'
 import { logger } from './src/utils/pino.js';
 //sessions
-import ModelUser from './src/models/user.js';
+import ModelUser from './src/components/models/user.js'
 import session from 'express-session';
 import passport from 'passport';
 import flash from 'connect-flash'
 import MongoStore from 'connect-mongo';
 //Routes
-import routeLogin from './src/routes/loginRoute.js';
-import routerHome from './src/routes/homeRoute.js';
-import routeCart from './src/routes/cartRoute.js';
-import routerProfile from './src/routes/profileRoute.js';
+import routeLogin from './src/api/routes/loginRoute.js';
+import routerHome from './src/api/routes/homeRoute.js';
+import routeCart from './src/api/routes/cartRoute.js';
+import routerProfile from './src/api/routes/profileRoute.js';
 
 const app = express();
 
