@@ -1,6 +1,7 @@
-import ModelUser from "../../components/models/user.js"
+import ContainerLogin from "../../components/DAO/Login/Login.js"
 import { loggerLog } from "../../utils/pino.js"
 
+const controller = new ContainerLogin()
 
 const register = (req, res) => {
     res.render('register')
@@ -8,15 +9,10 @@ const register = (req, res) => {
 
 const registerUser = async (req, res) => {
     const newUser = req.body
-    
     try {
-        const user = await ModelUser.findOne(newUser)
-        if (user.email) throw new Error('El usuario con ese mail ya existe')
-
-        await ModelUser.create(newUser)
+        await controller.addUser(newUser)
         res.redirect('/api/login')
     } catch (error) {
-        loggerLog.error({ msg: error.message });
         return res.redirect('/api/register')
     }
 }
@@ -30,7 +26,7 @@ const login = (req, res) => {
 const loginEnter = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await ModelUser.findOne({ email })
+        const user = await controller.login(email)
         
         if (!user) throw new Error('El usuario no existe')
 

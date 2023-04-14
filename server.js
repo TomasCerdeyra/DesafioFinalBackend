@@ -76,7 +76,7 @@ app.use(methodOverride('_method'))
 //Routes
 app.use('/api', routeLogin)
 app.use('/', routerHome)
-app.use('/api/carrito', routeCart)
+app.use('/api', routeCart)
 app.use('/api/perfil', routerProfile)
 
 

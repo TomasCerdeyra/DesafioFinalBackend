@@ -24,6 +24,7 @@ const sendMails = async (mail,name,prods) => {
         const info = await transporter.sendMail(emailContent)
         
     } catch (error) {
+        console.log("fallos");
         logger.info('Fallo el envio de mail')
     }
 }

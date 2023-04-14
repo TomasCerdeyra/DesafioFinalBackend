@@ -1,14 +1,16 @@
 import formidable from "formidable"
-import ModelUser from "../../components/models/user.js";
 import { logger } from "../../utils/pino.js"
 import fs from 'fs'
+import ContainerProfile from "../../components/DAO/Profile/Profile.js";
 //config __dirname
 import __dirname from "../../../configDirname.js";
 import path from "path";
 
+const controller = new ContainerProfile()
+
 const profile = async (req, res) => {
     try {
-        const user = await ModelUser.findById(req.user.id)
+        const user = await controller.getUser(req.user.id)
         res.render('perfil', { user: req.user, image: user.image })
     } catch (error) {
         logger.info(error)
@@ -35,17 +37,13 @@ const addImage = async (req, res) => {
             if (file.size > 50 * 1024 * 1024) throw new Error('Se puede insertar imagenes menores a 50MB')
 
             const extension = file.mimetype.split("/")[1];
-            console.log(__dirname);
+            
             const dirFile = path.join(__dirname, `/public/img/perfiles/${req.user.id}.${extension}`);
 
             fs.renameSync(file.filepath, dirFile)
 
-            const user = await ModelUser.findById(req.user.id)
+            await controller.updateImg(req.user.id, extension)
 
-            user.image = `${req.user.id}.${extension}`
-
-            await user.save()
-            
             req.flash("mensajes", [{ msg: 'Se subio la imagen' }])
             res.redirect('/api/perfil')
         } catch (error) {
