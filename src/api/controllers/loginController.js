@@ -1,6 +1,7 @@
-import ModelUser from "../models/user.js"
-import { loggerLog } from "../utils/pino.js"
+import ContainerLogin from "../../components/DAO/Login/Login.js"
+import { loggerLog } from "../../utils/pino.js"
 
+const controller = new ContainerLogin()
 
 const register = (req, res) => {
     res.render('register')
@@ -8,16 +9,11 @@ const register = (req, res) => {
 
 const registerUser = async (req, res) => {
     const newUser = req.body
-    console.log(newUser);
     try {
-        const user = await ModelUser.findOne(newUser)
-        if (user) throw new Error('El usuario con ese mail ya existe')
-
-        await ModelUser.create(newUser)
-        res.redirect('/login')
+        await controller.addUser(newUser)
+        res.redirect('/api/login')
     } catch (error) {
-        loggerLog.error({ msg: error.message });
-        return res.redirect('/register')
+        return res.redirect('/api/register')
     }
 }
 
@@ -30,13 +26,10 @@ const login = (req, res) => {
 const loginEnter = async (req, res) => {
     const { email, password } = req.body
     try {
-        const user = await ModelUser.findOne({ email })
+        const user = await controller.login(email)
         
         if (!user) throw new Error('El usuario no existe')
 
-        //Despues hacer verificacion si tiene la cuenta confirmada
-
-        //
         if (!(await user.comparePassword(password))) throw new Error('Uno de los datos ingresados es incorrecto')
 
         req.login(user, err =>{
@@ -46,7 +39,7 @@ const loginEnter = async (req, res) => {
     } catch (error) {
         loggerLog.error({ msg: error.message } )
         req.flash("mensajes", [{msg: error.message}])
-        res.redirect('/login')
+        res.redirect('/api/login')
     }
 }
 

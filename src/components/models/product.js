@@ -3,9 +3,6 @@ import mongoose from "mongoose";
 const collName = 'products'
 
 const productSchema = new mongoose.Schema({
-    timestamp: {
-        type: String
-    },
     name: {
         required: true,
         type: String

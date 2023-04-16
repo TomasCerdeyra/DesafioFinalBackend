@@ -4,8 +4,8 @@ import authenticUsers from '../middlewares/authenticUser.js'
 
 const routerProfile = express.Router()
 
-routerProfile.get('/perfil', authenticUsers, profile)
+routerProfile.get('/', authenticUsers, profile)
 
-routerProfile.post('/perfil', authenticUsers , addImage)
+routerProfile.post('/', authenticUsers , addImage)
 
 export default routerProfile
