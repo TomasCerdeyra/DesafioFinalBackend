@@ -1,4 +1,40 @@
-# Entrega Final Backend CoderHouse
+# Entrega Final Backend CoderHouse 👾
+
+## Introduccion
+
+Este proyecto es mi entrega final para el curso Programacion Backend de CoderHouse. En este caso es un eccommerce trabajado con el modelo "vista controlador", centrado mas en la parte de peticiones , CRUD , persistencia de datos que en el diseño de las vistas.
+
+## Herramientas y tecnologias utilizadas 🔧
+
+1- Node js
+
+2- Express js
+
+3- MongoDB
+
+4- JavaScript
+
+5- Mongoose
+
+6- Nodemailer
+
+7- Formidable
+
+8- Passport
+
+9- Connect-mongo
+
+10- Connect-flash
+
+11- Dotenv
+
+12- Bcryptjs
+
+13- Pino
+
+14- Express-handlebars
+
+15- Express-session
 
 ## Levantar Proeycto
 
